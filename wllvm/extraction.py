@@ -228,7 +228,6 @@ def linkFiles(pArgs, fileNames):
     linkCmd = [pArgs.llvmLinker, '-v'] if pArgs.verboseFlag else [pArgs.llvmLinker]
 
     linkCmd.append(f'-o={pArgs.outputFile}')
-    linkCmd.append('--only-needed')
 
     fileNames = map(getBitcodePath, fileNames)
     linkCmd.extend([x for x in fileNames if x != ''])
