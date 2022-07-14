@@ -230,7 +230,14 @@ def linkFiles(pArgs, fileNames):
     linkCmd.append(f'-o={pArgs.outputFile}')
 
     fileNames = map(getBitcodePath, fileNames)
-    linkCmd.extend([x for x in fileNames if x != ''])
+    names = []
+    excludes = []
+    if os.environ.get('EXCLUDE_PATHS', '') != '':
+        excludes = os.environ.get('EXCLUDE_PATHS').split(' ')
+    for x in fileNames:
+        if x != '' and x not in excludes:
+            names.append(x)
+    linkCmd.extend(names)
 
     try:
         linkProc = Popen(linkCmd)
